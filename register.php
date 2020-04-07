@@ -16,40 +16,58 @@
     </head>
     <body>
         <div class="container">
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 col-lg-12">
+         <div class="row justify-content-center mt-4">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-6 col-lg-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Signup</h5>
-                        <?php if (isset($Errors) && count($Errors) > 0): ?>
+                        <h3 class="card-title text-center mb-3">Signup</h3>
+                        <?php if (isset($Response['error'])): ?>
+                            <!-- Bootstrap Alert -->
+                            <div class="alert alert-danger alert-dismissable mb-3"><b>Oops</b>, <?php echo $Response['error']; ?></div>
                             <!-- Bootstrap Alert -->
                         <?php endif; ?>
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 col-xl-12">
+                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="">First Name</label>
                                         <input type="text" name="first_name" id="" class="form-control" required>
                                     </div>
+                                    <?php if (isset($Response['first_name']) && !empty($Response['first_name'])): ?>
+                                        <small class="alert alert-danger alert-dismissable"><?php echo $Response['first_name']; ?></small>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 col-xl-12">
+                                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="">Last Name</label>
                                         <input type="text" name="last_name" id="" class="form-control" required>
                                     </div>
+                                    <?php if (isset($Response['last_name']) && !empty($Response['last_name'])): ?>
+                                        <small class="alert alert-danger alert-dismissable"><?php echo $Response['last_name']; ?></small>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 col-xl-12">
+                            </div>
+                            <div class="row">
+                                 <div class="col-xs-12 col-sm-12 col-lg-6 col-md-12 col-xl-6">
                                     <div class="form-group">
                                         <label for="">Email</label>
                                         <input type="email" name="email" id="" class="form-control" required>
                                     </div>
+                                    <?php if (isset($Response['email']) && !empty($Response['email'])): ?>
+                                        <small class="alert alert-danger alert-dismissable"><?php echo $Response['email']; ?></small>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                     <div class="form-group">
                                         <label for="">Password</label>
                                         <input type="password" name="password" id="" class="form-control" required>
                                     </div>
+                                    <?php if (isset($Response['password']) && !empty($Response['password'])): ?>
+                                        <small class="alert alert-danger alert-dismissable"><?php echo $Response['password']; ?></small>
+                                    <?php endif; ?>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-success btn-block">Register</button>

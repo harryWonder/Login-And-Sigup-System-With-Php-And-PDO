@@ -1,7 +1,7 @@
 <?php
   require_once('./functions/Login.php');
   if (isset($_POST) && count($_POST) > 0) {
-     Login($_POST);
+    $Response = Login($_POST);
   }
 ?>
 <!DOCTYPE html>
@@ -16,12 +16,14 @@
     </head>
     <body>
         <div class="container">
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12 col-lg-12">
+         <div class="row justify-content-center mt-4">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-xl-4 col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Login</h5>
-                        <?php if (isset($Errors) && count($Errors) > 0): ?>
+                        <h3 class="card-title text-center mb-3">Login</h3>
+                        <?php if (isset($Response['error'])): ?>
+                            <!-- Bootstrap Alert -->
+                            <div class="alert alert-danger alert-dismissable mb-3"><b>Oops</b>, <?php echo $Response['error']; ?></div>
                             <!-- Bootstrap Alert -->
                         <?php endif; ?>
                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">

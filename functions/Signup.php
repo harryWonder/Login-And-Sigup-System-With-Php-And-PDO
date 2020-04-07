@@ -1,5 +1,5 @@
 <?php 
-    // Hint!! When requireing files, I suggest using absolute file paths as this method tends to break things...
+    // Hint!! When requiring files, I suggest using absolute file paths as this method tends to break things...
     require_once('./functions/Db.php');
 
     /**
@@ -20,25 +20,26 @@
         //Just In Case....
         $Errors = [];
 
-        if (is_numeric($first_name)) {
+        if (preg_match('/[^A-Za-z0-9_]/', $first_name)) {
             $Errors['first_name'] = "Sorry, Please enter a valid first name";
         }
 
-        if (is_numeric($last_name)) {
+        if (preg_match('/[^A-Za-z0-9_]/', $last_name)) {
             $Errors['last_name'] = "Sorry, Please enter a valid last name";
         }
 
         //Check if the email exists...
         $emailExists = checkEmail($email);
         if ($emailExists['status']) {
-            $Errors['email'] = "Sorry, This email address has been taken.";
+            $Errors['email'] = "Sorry, This email already exist.";
         }
 
         if (strlen($password) < 7) {
-            $Errors['password'] = "Please, Use a password with a a length greater than 7.";
+            $Errors['password'] = "Sorry, Use a stronger password";
         }
 
-        if (count($Errors) > 0) {            
+        if (count($Errors) > 0) {           
+            $Errors['error'] = "Please, correct the Errors in your form in order to continue.";
             return $Errors;
         } else {
             //Create the new user...
@@ -48,11 +49,16 @@
                 'email' => $email,
                 'password' => $password
             ];
-            $registration = register($Data);
+            $registration = Register($Data);
             
             if ($registration) {
                 //Before the redirect this would be a good time to send a mail or something in order to verify the user...
-                $_SESSION['user'] = $Data;
+                array_pop($Data);
+                $_SESSION['current_session'] = [
+                    'status' => 1,
+                    'user' => $Data,
+                    'date_time' => date('Y-m-d H:i:s'),
+                ];
                 header("Location: dashboard.php");
             } else {
                 //#You could probably notify the dev team within this line but this is just a demo still....
@@ -92,7 +98,7 @@
      * @return Array 
      * @desc Creates a new user and returns a boolean indicating the status of the              operation...
      */
-    function register(array $data)
+    function Register(array $data)
     {
         $dbHandler = DbHandler();
         $statement = $dbHandler->prepare("INSERT INTO `user` (first_name, last_name, email, password, status, created_at, updated_at) VALUES (:first_name, :last_name, :email, :password, :status, :created_at, :updated_at)");

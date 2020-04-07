@@ -23,7 +23,7 @@
           $Connection = new PDO($Dsn, $dbUser, $dbPass, $options);
           return $Connection;
         } catch (Exception $e) {
-          return 'Couldn\'t Establish A Database Connection. Due to the following reason: ' . $e->getMessage();
+          var_dump('Couldn\'t Establish A Database Connection. Due to the following reason: ' . $e->getMessage());
         }
     }
 ?>
