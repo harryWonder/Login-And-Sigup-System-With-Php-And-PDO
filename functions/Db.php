@@ -8,7 +8,7 @@
     function DbHandler ()
     {
         $dbHost = 'localhost';
-        $dbName = 'learning_dollars_db';
+        $dbName = 'simple_login_and_signup_system';
         $dbUser = 'root';
         $dbPass = '';
         //Create a DSN for the database resource...
